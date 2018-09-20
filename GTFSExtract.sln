@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GTFSExtract", "GTFSExtract\GTFSExtract.csproj", "{EE6D9728-151F-4CEF-84F3-560509C5803A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationExtract", "ValidationExtract\ValidationExtract.csproj", "{950400B2-4B57-432D-8F14-5714E19A5414}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE6D9728-151F-4CEF-84F3-560509C5803A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6D9728-151F-4CEF-84F3-560509C5803A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6D9728-151F-4CEF-84F3-560509C5803A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6D9728-151F-4CEF-84F3-560509C5803A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{950400B2-4B57-432D-8F14-5714E19A5414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{950400B2-4B57-432D-8F14-5714E19A5414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{950400B2-4B57-432D-8F14-5714E19A5414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{950400B2-4B57-432D-8F14-5714E19A5414}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4916CF47-F80C-4EFE-A285-605CFFBD00B5}
+	EndGlobalSection
+EndGlobal
