@@ -11,150 +11,160 @@ namespace GTFSExtract
     {
         static void Main(string[] args)
         {
-            string gtfsInDirectoryPath = @"C:\Users\x666333\Desktop\4_GTFS-ST-CPP_3_20180228";
-            string gtfsOutDirectoryPath = @"C:\Users\x666333\Desktop\4_GTFS-ST-CPP_30_20180228";
-
-            string routeIdToKeep = "B0536-15453";
-            Dictionary<string, bool> tripIdToKeep = new Dictionary<string, bool>();
-            Dictionary<string, bool> stopIdToKeep = new Dictionary<string, bool>();
-            Dictionary<string, bool> shapeIdToKeep = new Dictionary<string, bool>();
-
-            // routes.txt
-            using (StreamReader sr = new StreamReader(String.Format("{0}\\routes.txt", gtfsInDirectoryPath)))
+            if (args.Length != 3)
             {
-                using (StreamWriter sw = new StreamWriter(String.Format("{0}\\routes.txt", gtfsOutDirectoryPath)))
+                System.Console.WriteLine("GTFSExtract source destination route");
+                System.Console.WriteLine("source : source directory with unzip gtfs");
+                System.Console.WriteLine("destination : destination directory");
+                System.Console.WriteLine("route : route to extract");
+            }
+            else
+            {
+                string gtfsInDirectoryPath = args[0];
+                string gtfsOutDirectoryPath = args[1];
+                string routeIdToKeep = args[2];
+
+                Dictionary<string, bool> tripIdToKeep = new Dictionary<string, bool>();
+                Dictionary<string, bool> stopIdToKeep = new Dictionary<string, bool>();
+                Dictionary<string, bool> shapeIdToKeep = new Dictionary<string, bool>();
+
+                // routes.txt
+                using (StreamReader sr = new StreamReader(String.Format("{0}\\routes.txt", gtfsInDirectoryPath)))
                 {
-                    string header = sr.ReadLine();
-                    sw.WriteLine(header);
-                    string[] headers = header.Split(',');
-                    Dictionary<string, int> headersDic = new Dictionary<string, int>();
-
-                    for (int i = 0; i < headers.Length; i++)
+                    using (StreamWriter sw = new StreamWriter(String.Format("{0}\\routes.txt", gtfsOutDirectoryPath)))
                     {
-                        headersDic.Add(headers[i], i);
-                    }
+                        string header = sr.ReadLine();
+                        sw.WriteLine(header);
+                        string[] headers = header.Split(',');
+                        Dictionary<string, int> headersDic = new Dictionary<string, int>();
 
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        string[] values = line.Split(',');
-                        if (values[headersDic["route_id"]] == routeIdToKeep)
+                        for (int i = 0; i < headers.Length; i++)
                         {
-                            sw.WriteLine(line);
+                            headersDic.Add(headers[i], i);
+                        }
+
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] values = line.Split(',');
+                            if (values[headersDic["route_id"]] == routeIdToKeep)
+                            {
+                                sw.WriteLine(line);
+                            }
                         }
                     }
                 }
-            }
 
-            //trips.txt
-            using (StreamReader sr = new StreamReader(String.Format("{0}\\trips.txt", gtfsInDirectoryPath)))
-            {
-                using (StreamWriter sw = new StreamWriter(String.Format("{0}\\trips.txt", gtfsOutDirectoryPath)))
+                //trips.txt
+                using (StreamReader sr = new StreamReader(String.Format("{0}\\trips.txt", gtfsInDirectoryPath)))
                 {
-                    string header = sr.ReadLine();
-                    sw.WriteLine(header);
-                    string[] headers = header.Split(',');
-                    Dictionary<string, int> headersDic = new Dictionary<string, int>();
-
-                    for (int i = 0; i < headers.Length; i++)
+                    using (StreamWriter sw = new StreamWriter(String.Format("{0}\\trips.txt", gtfsOutDirectoryPath)))
                     {
-                        headersDic.Add(headers[i], i);
-                    }
+                        string header = sr.ReadLine();
+                        sw.WriteLine(header);
+                        string[] headers = header.Split(',');
+                        Dictionary<string, int> headersDic = new Dictionary<string, int>();
 
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        string[] values = line.Split(',');
-                        if (values[headersDic["route_id"]] == routeIdToKeep)
+                        for (int i = 0; i < headers.Length; i++)
                         {
-                            tripIdToKeep[values[headersDic["trip_id"]]] = true;
-                            shapeIdToKeep[values[headersDic["shape_id"]]] = true;
-                            sw.WriteLine(line);
+                            headersDic.Add(headers[i], i);
+                        }
+
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] values = line.Split(',');
+                            if (values[headersDic["route_id"]] == routeIdToKeep)
+                            {
+                                tripIdToKeep[values[headersDic["trip_id"]]] = true;
+                                shapeIdToKeep[values[headersDic["shape_id"]]] = true;
+                                sw.WriteLine(line);
+                            }
                         }
                     }
                 }
-            }
 
-            //stop_times.txt
-            using (StreamReader sr = new StreamReader(String.Format("{0}\\stop_times.txt", gtfsInDirectoryPath)))
-            {
-                using (StreamWriter sw = new StreamWriter(String.Format("{0}\\stop_times.txt", gtfsOutDirectoryPath)))
+                //stop_times.txt
+                using (StreamReader sr = new StreamReader(String.Format("{0}\\stop_times.txt", gtfsInDirectoryPath)))
                 {
-                    string header = sr.ReadLine();
-                    sw.WriteLine(header);
-                    string[] headers = header.Split(',');
-                    Dictionary<string, int> headersDic = new Dictionary<string, int>();
-
-                    for (int i = 0; i < headers.Length; i++)
+                    using (StreamWriter sw = new StreamWriter(String.Format("{0}\\stop_times.txt", gtfsOutDirectoryPath)))
                     {
-                        headersDic.Add(headers[i], i);
-                    }
+                        string header = sr.ReadLine();
+                        sw.WriteLine(header);
+                        string[] headers = header.Split(',');
+                        Dictionary<string, int> headersDic = new Dictionary<string, int>();
 
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        string[] values = line.Split(',');
-
-                        if (tripIdToKeep.ContainsKey(values[headersDic["trip_id"]]))
+                        for (int i = 0; i < headers.Length; i++)
                         {
-                            stopIdToKeep[values[headersDic["stop_id"]]] = true;
-                            sw.WriteLine(line);
+                            headersDic.Add(headers[i], i);
+                        }
+
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] values = line.Split(',');
+
+                            if (tripIdToKeep.ContainsKey(values[headersDic["trip_id"]]))
+                            {
+                                stopIdToKeep[values[headersDic["stop_id"]]] = true;
+                                sw.WriteLine(line);
+                            }
                         }
                     }
                 }
-            }
 
-            //stops.txt
-            using (StreamReader sr = new StreamReader(String.Format("{0}\\stops.txt", gtfsInDirectoryPath)))
-            {
-                using (StreamWriter sw = new StreamWriter(String.Format("{0}\\stops.txt", gtfsOutDirectoryPath)))
+                //stops.txt
+                using (StreamReader sr = new StreamReader(String.Format("{0}\\stops.txt", gtfsInDirectoryPath)))
                 {
-                    string header = sr.ReadLine();
-                    sw.WriteLine(header);
-                    string[] headers = header.Split(',');
-                    Dictionary<string, int> headersDic = new Dictionary<string, int>();
-
-                    for (int i = 0; i < headers.Length; i++)
+                    using (StreamWriter sw = new StreamWriter(String.Format("{0}\\stops.txt", gtfsOutDirectoryPath)))
                     {
-                        headersDic.Add(headers[i], i);
-                    }
+                        string header = sr.ReadLine();
+                        sw.WriteLine(header);
+                        string[] headers = header.Split(',');
+                        Dictionary<string, int> headersDic = new Dictionary<string, int>();
 
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        string[] values = line.Split(',');
-
-                        if (stopIdToKeep.ContainsKey(values[headersDic["stop_id"]]))
+                        for (int i = 0; i < headers.Length; i++)
                         {
-                            sw.WriteLine(line);
+                            headersDic.Add(headers[i], i);
+                        }
+
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] values = line.Split(',');
+
+                            if (stopIdToKeep.ContainsKey(values[headersDic["stop_id"]]))
+                            {
+                                sw.WriteLine(line);
+                            }
                         }
                     }
                 }
-            }
 
-            //shapes.txt
-            using (StreamReader sr = new StreamReader(String.Format("{0}\\shapes.txt", gtfsInDirectoryPath)))
-            {
-                using (StreamWriter sw = new StreamWriter(String.Format("{0}\\shapes.txt", gtfsOutDirectoryPath)))
+                //shapes.txt
+                using (StreamReader sr = new StreamReader(String.Format("{0}\\shapes.txt", gtfsInDirectoryPath)))
                 {
-                    string header = sr.ReadLine();
-                    sw.WriteLine(header);
-                    string[] headers = header.Split(',');
-                    Dictionary<string, int> headersDic = new Dictionary<string, int>();
-
-                    for (int i = 0; i < headers.Length; i++)
+                    using (StreamWriter sw = new StreamWriter(String.Format("{0}\\shapes.txt", gtfsOutDirectoryPath)))
                     {
-                        headersDic.Add(headers[i], i);
-                    }
+                        string header = sr.ReadLine();
+                        sw.WriteLine(header);
+                        string[] headers = header.Split(',');
+                        Dictionary<string, int> headersDic = new Dictionary<string, int>();
 
-                    while (!sr.EndOfStream)
-                    {
-                        string line = sr.ReadLine();
-                        string[] values = line.Split(',');
-
-                        if (shapeIdToKeep.ContainsKey(values[headersDic["shape_id"]]))
+                        for (int i = 0; i < headers.Length; i++)
                         {
-                            sw.WriteLine(line);
+                            headersDic.Add(headers[i], i);
+                        }
+
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            string[] values = line.Split(',');
+
+                            if (shapeIdToKeep.ContainsKey(values[headersDic["shape_id"]]))
+                            {
+                                sw.WriteLine(line);
+                            }
                         }
                     }
                 }
