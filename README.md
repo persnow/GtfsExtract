@@ -1,2 +1,4 @@
 # GtfsExtract
-Extract a single line from a GTFS
+Extract a single route from a GTFS.
+
+Developed in C# with VisualStudio.
