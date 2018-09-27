@@ -16,13 +16,15 @@ namespace GTFSExtract
                 System.Console.WriteLine("GTFSExtract source destination route");
                 System.Console.WriteLine("source : source directory with unzip gtfs");
                 System.Console.WriteLine("destination : destination directory");
-                System.Console.WriteLine("route : route to extract");
+                System.Console.WriteLine("route : list of routes to extract separated by a ;");
             }
             else
             {
                 string gtfsInDirectoryPath = args[0];
                 string gtfsOutDirectoryPath = args[1];
-                string routeIdToKeep = args[2];
+                string routeList = args[2];
+
+                string [] routeIdToKeep = routeList.Split(';');
 
                 Dictionary<string, bool> tripIdToKeep = new Dictionary<string, bool>();
                 Dictionary<string, bool> stopIdToKeep = new Dictionary<string, bool>();
@@ -47,7 +49,7 @@ namespace GTFSExtract
                         {
                             string line = sr.ReadLine();
                             string[] values = line.Split(',');
-                            if (values[headersDic["route_id"]] == routeIdToKeep)
+                            if (routeIdToKeep.Contains(values[headersDic["route_id"]]))
                             {
                                 sw.WriteLine(line);
                             }
@@ -74,7 +76,7 @@ namespace GTFSExtract
                         {
                             string line = sr.ReadLine();
                             string[] values = line.Split(',');
-                            if (values[headersDic["route_id"]] == routeIdToKeep)
+                            if (routeIdToKeep.Contains(values[headersDic["route_id"]]))
                             {
                                 tripIdToKeep[values[headersDic["trip_id"]]] = true;
                                 shapeIdToKeep[values[headersDic["shape_id"]]] = true;
